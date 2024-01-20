@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+</head>
+
+<body>
+    <div>
+        <h3>Welcome to Edit page</h3>
+
+        <form method="POST" action="/edit/<%= adminModel._id%>" onsubmit="event.preventDefault()">
+            <!-- event.preventDefault(); -->
+            <table>
+                <tr>
+                    <td>first name</td>
+                    <td><input type="text" name="fName" id="fName" value="<%= adminModel.fName%>"placeholder="enter fname">
+                        <span style="color: red;" id="ferror"></span>
+                        </td>
+                </tr>
+                <tr>
+                    <td>last name</td>
+                    <td><input type="text" name="lName" id="lName" value="<%= adminModel.lName%>"placeholder="enter lname">
+                    <span id="lerror" style="color:red"></span>
+                </td>
+                </tr>
+
+                <tr>
+                    <td>password</td>
+                    <td><input type="password" name="password" id="password" placeholder="enter password">
+                    <span id="perror" style="color:red"></span>
+                </td>
+                </tr>
+
+                <tr>
+                    <td>confirm password</td>
+                    <td><input type="password" name="cpassword" id="cpassword" placeholder="enter confirm password">
+                        <span id="cpwd" style="color:red"></span>
+                    </td>
+                </tr>
+            </table>
+            <div>
+                <button type="submit" onclick="updateData()">submit</button>
+            </div>
+        </form>
+        <span style="color: red;" id="pswee"></span>
+    </div>
+
+    <script>
+        function updateData() {
+
+//Validation of first-name
+                
+const ufnames = document.getElementById("fName").value;
+         const fregex = /[a-zA-Z]/
+
+         if(ufnames == ""){
+             document.getElementById("ferror").innerHTML = "please enter first name";
+             return false;
+         }
+ 
+
+         if(!fregex.test(ufnames)){
+            document.getElementById("ferror").innerHTML = "please enter character only";
+             return false;
+         }
+
+         
+         if(ufnames.length <= 2 ){
+            document.getElementById("ferror").innerHTML = "Please enter more than two character"
+            return false;
+         }
+         if(ufnames.length > 15){
+            document.getElementById("ferror").innerHTML = "Please enter less than fifteen character"
+            return false;
+         }
+         else{
+            document.getElementById("ferror").innerHTML = ""
+         }
+
+
+//Validation for Last Name 
+         const ulname = document.getElementById("lName").value;
+            const lregex = /[a-zA-Z]/
+
+            if(ulname == ""){
+                document.getElementById("lerror").innerHTML = "please enter last name";
+                return false;
+            }
+
+            if(!lregex.test(ulname)){
+                document.getElementById("lerror").innerHTML = "Please enter character only";
+                return false;
+            }
+
+            if(ulname.length <= 2 ){
+            document.getElementById("lerror").innerHTML = "Please enter more than two character"
+            return false;
+            }
+            if(ulname.length > 15){
+            document.getElementById("lerror").innerHTML = "Please enter less than fifteen character"
+            return false;
+            }
+            else{
+            document.getElementById("lerror").innerHTML = ""
+         }
+
+//Validation for password
+         
+           const pwd = document.getElementById("password").value
+
+           if(pwd == ""){
+            document.getElementById("perror").innerHTML = "Please provide password"
+            return false;
+           }
+           console.log("pass",pwd.length)
+           if(pwd.length < 5){
+            document.getElementById("perror").innerHTML = "Please provide manimum 5 digit "
+            return false;
+           }
+           if(pwd.length > 15){
+            document.getElementById("perror").innerHTML = "Please provide less than 15 digit "
+            return false;
+           }
+           else{
+            document.getElementById("perror").innerHTML = ""
+           }
+           
+
+//Validation for confirm password
+   
+              const cpswd = document.getElementById("cpassword").value
+               
+              if(cpswd == ""){
+                document.getElementById("cpwd").innerHTML =  "Please enter confirm password"
+                return false;
+              }
+              else{
+                document.getElementById("cpwd").innerHTML =  ""
+              }
+
+//Cross Checking password and confirm password
+
+          const psd1 = document.getElementById("password").value
+         const psd2 = document.getElementById("cpassword").value
+          
+         if(psd1 != psd2){
+            document.getElementById("pswee").innerHTML = "Please enter password and confirm password same"
+            return false;
+         }
+
+//connected to bakend to store or update of details of user
+            const requser = new XMLHttpRequest();
+            const params = "fName=" + fName.value + "&lName=" + lName.value + "&password=" + password.value
+
+            requser.open("POST", '/edit', true)
+            requser.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            requser.send(params);
+            requser.onreadystatechange = function () {
+                if (requser.readyState == 4 && requser.status == 200) {
+                    alert("Data update  successfully");
+                }
+            }
+        }
+
+
+
+
+    </script>
+
+</body>
+
+</html>

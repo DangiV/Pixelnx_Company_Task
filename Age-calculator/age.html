@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div>
+        <label>Date of birth</label>
+        <input type="date" name="birthDate" id="birthDate">
+    </div>
+    <div>
+        <label>current date</label>
+        <input type="date" name="birthDate" id="currenthDate">
+    </div>
+    <button onclick="getage()">calculate-age</button>
+    <p id="output"></p>
+
+    <script>
+          function getage(start,end) {
+            const  dob = document.getElementById("birthDate").value
+            const currentDate = document.getElementById("birthDate").value
+
+            console.log(dob);
+            console.log(currentDate);
+
+            const year = parseInt(start.substring(0,4),10);
+            const month = parseInt(start,substring(5,7),10)
+            const date = parseInt(start.substring(8,10),10);
+            const curryear = parseInt(end.substring(0,4),10)
+            const currmonth = parseInt(end,substring(5,7),10)
+            const currdate = parseInt(end.substring(8,10),10);
+
+            //taking out difference of year
+            const yeardiff = curryear - year
+
+            //takingout difference of month
+
+            let  monthdiff;
+            if(currmonth >= month){
+                monthdiff = currmonth - month
+            }
+            else{
+                yeardiff--;
+                monthdiff = 12 + currmonth - month;
+            }
+
+            // days difference
+            let agediff;
+            if(currdate >= date){
+                agediff = currdate - date;
+            }
+            else{
+                monthdiff--;
+                noOfdaysinDOB = daysInMonth(month,year)
+                datediff = noOfdaysinDOB + currdate - date
+
+                //case when monthAgeDiff goes negative
+                if(monthdiff < 0){
+                    monthdiff = 11; 
+                    yeardiff--;
+
+                }
+            }
+            output.innnerHtml = yeardiff + "year" + monthdiff + "month" + datediff + "days"
+          }
+    </script>
+</body>
+</html>
